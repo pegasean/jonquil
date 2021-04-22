@@ -1,0 +1,23 @@
+{
+    "name": "pegasean/jonquil",
+    "description": "The Jonquil PHP Framework",
+    "keywords": ["jonquil", "framework"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Orlin Topalov",
+            "email": "orlin.topalov@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jonquil\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-version": "0.1-dev"
+    }
+}
