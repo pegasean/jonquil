@@ -240,7 +240,7 @@ class PdoSessionHandler implements \SessionHandlerInterface
     /**
      * {@inheritDoc}
      */
-    public function gc($maxLifetime): bool
+    public function gc(int $maxLifetime): int|false
     {
         $timeThreshold = date(self::DATE_FORMAT, time() - $maxLifetime);
 
@@ -263,7 +263,7 @@ class PdoSessionHandler implements \SessionHandlerInterface
             );
         }
 
-        return true;
+        return $statement->rowCount();
     }
 
     /**

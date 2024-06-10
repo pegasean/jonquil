@@ -667,7 +667,7 @@ class Map implements ArrayAccess, Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return array_key_exists($offset, $this->data);
     }
@@ -675,7 +675,7 @@ class Map implements ArrayAccess, Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->data[$offset];
     }
@@ -683,7 +683,7 @@ class Map implements ArrayAccess, Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($this->isImmutable()) {
             throw new LogicException(static::$errors['changes_not_allowed']);
@@ -695,7 +695,7 @@ class Map implements ArrayAccess, Countable
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         if ($this->isImmutable()) {
             throw new LogicException(static::$errors['changes_not_allowed']);

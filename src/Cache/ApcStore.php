@@ -17,7 +17,7 @@ class ApcStore implements CacheInterface
      * @var array Error messages
      */
     protected static $errors = [
-        'extension_not_loaded' => 'The APC extension is not loaded',
+        'extension_not_loaded' => 'The APCu extension is not loaded',
     ];
 
     /**
@@ -37,7 +37,7 @@ class ApcStore implements CacheInterface
      */
     public function __construct(int $lifetime = 0)
     {
-        if (!extension_loaded('apc')) {
+        if (!extension_loaded('apcu')) {
             throw new \RuntimeException(
                 self::$errors['extension_not_loaded']
             );
@@ -52,7 +52,7 @@ class ApcStore implements CacheInterface
      */
     public function get(string $id)
     {
-        return apc_fetch($this->prefix($id));
+        return apcu_fetch($this->prefix($id));
     }
 
     /**
@@ -64,7 +64,7 @@ class ApcStore implements CacheInterface
             $lifetime = $this->lifetime;
         }
 
-        return apc_store($this->prefix($id), $data, $lifetime);
+        return apcu_store($this->prefix($id), $data, $lifetime);
     }
 
     /**
@@ -72,7 +72,7 @@ class ApcStore implements CacheInterface
      */
     public function delete(string $id): bool
     {
-        return apc_delete($this->prefix($id));
+        return apcu_delete($this->prefix($id));
     }
 
     /**
@@ -80,7 +80,7 @@ class ApcStore implements CacheInterface
      */
     public function flush(): bool
     {
-        return apc_clear_cache('user');
+        return apcu_clear_cache('user');
     }
 
     /**

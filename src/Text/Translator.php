@@ -7,6 +7,7 @@ namespace Jonquil\Text;
 use Jonquil\Cache\CacheInterface;
 use Jonquil\Type\Map;
 use Exception;
+use IntlDateFormatter;
 use InvalidArgumentException;
 
 /**
@@ -253,18 +254,21 @@ class Translator
     public function getTime(
         string $key,
         int $timestamp = 0,
-        string $defaultFormat = '%G-%m-%d %H:%M:%S'
+        string $defaultFormat = 'yyyy-MM-dd HH:mm:ss'
     ): string {
         if (empty($timestamp)) {
             $timestamp = time();
         }
 
+        $formatter = new IntlDateFormatter($this->language, IntlDateFormatter::FULL, IntlDateFormatter::FULL);
+
         $format = $this->dictionary->get($key);
-        if (is_string($format) && !empty($format)) {
-            return strftime($format, $timestamp);
+        if (!is_string($format) || empty($format)) {
+            $format = $defaultFormat;
         }
 
-        return strftime($defaultFormat, $timestamp);
+        $formatter->setPattern($format);
+        return $formatter->format($timestamp);
     }
 
     /**

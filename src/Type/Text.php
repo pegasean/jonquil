@@ -887,7 +887,7 @@ class Text implements ArrayAccess, Countable, IteratorAggregate
         $this->content = mb_ereg_replace(
             $search,
             $replacement,
-            $this->content,
+            strval($this->content),
             $options
         );
         mb_regex_encoding($regexEncoding);
@@ -1407,7 +1407,7 @@ class Text implements ArrayAccess, Countable, IteratorAggregate
     ): Text {
         $transliteratorId .= ';Latin-ASCII';
         $this->transliterate($transliteratorId);
-        $pattern = '/[^a-zA-Z\d\s-_' . preg_quote($delimiter) . ']/u';
+        $pattern = '/[^a-zA-Z\d\s\-_' . preg_quote($delimiter) . ']/u';
         $this->content = preg_replace($pattern, '', $this->content);
         $this->delimit($delimiter);
         return $this;
@@ -1497,7 +1497,7 @@ class Text implements ArrayAccess, Countable, IteratorAggregate
      * @return bool
      * @throws InvalidArgumentException
      */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         if (!is_int($offset) || ($offset < 0)) {
             throw new InvalidArgumentException(
@@ -1516,7 +1516,7 @@ class Text implements ArrayAccess, Countable, IteratorAggregate
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         if (!$this->offsetExists($offset)) {
             throw new OutOfBoundsException('No character exists at the index');
@@ -1533,7 +1533,7 @@ class Text implements ArrayAccess, Countable, IteratorAggregate
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!$this->offsetExists($offset)) {
             throw new OutOfBoundsException('No character exists at the index');
@@ -1556,7 +1556,7 @@ class Text implements ArrayAccess, Countable, IteratorAggregate
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         if (!$this->offsetExists($offset)) {
             throw new OutOfBoundsException('No character exists at the index');

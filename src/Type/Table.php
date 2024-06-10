@@ -1150,7 +1150,7 @@ class Table extends Map
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->addRow($offset, $value, true);
     }
@@ -1158,7 +1158,7 @@ class Table extends Map
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         $this->deleteRow($offset);
     }
